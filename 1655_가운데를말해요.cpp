@@ -33,11 +33,11 @@ int main() {
         n1 = pq1.top(); n2 = pq2.top();
         s1 = pq1.size(); s2 = pq2.size();
 
-        if(n1 <= n && n <= n2) {
+        if(n1 <= x && x <= n2) {
             if(s1 == s2) pq1.push(x);
             else if(s1 > s2) pq2.push(x);
         }
-        else if(n < n1) {
+        else if(x < n1) {
             if(s1 == s2) pq1.push(x);
             else if(s1 > s2) {
                 pq2.push(pq1.top());
@@ -45,7 +45,7 @@ int main() {
                 pq1.push(x);
             }
         }
-        else if(n > n2) {
+        else if(x > n2) {
             if(s1 == s2) {
                 pq1.push(pq2.top());
                 pq2.pop();
