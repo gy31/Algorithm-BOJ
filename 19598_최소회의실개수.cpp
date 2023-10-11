@@ -3,7 +3,7 @@
 using namespace std;
 pair<int, int> p[100000];
 int cmp(pair<int, int> i, pair<int, int> j) {
-    return i.second < j.second || i.first < j.first;
+    return i.second < j.second || i.second == j.second && i.first < j.first;
 }
 int main() {
     int i, n, x, y, cnt = 0, answer = 0;
