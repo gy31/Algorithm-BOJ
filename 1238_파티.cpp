@@ -6,7 +6,7 @@ using namespace std;
 vector<pair<int, int>> v[1001];
 int N, M, X;
 int dijkstra(int st, int ed) {
-    vector<int> dist(N+1, 1000000000);
+    vector<int> dist(N+1, 987654321);
     priority_queue<pair<int, int>> pq;
     pq.push(make_pair(0, st));
     dist[st] = 0;
