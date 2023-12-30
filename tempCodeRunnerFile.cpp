@@ -1,3 +1,2 @@
-for(int i = 0; i < N; i++) {
-        ans[i] = 1;
-    }
+
+    cin >> N >> M >> R;
