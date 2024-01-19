@@ -1,7 +1,16 @@
 #include<iostream>
+#include<algorithm>
+#include<vector>
 using namespace std;
-int N, M, ans, V[1001], dis[1001][1001];
-char c[1001];
+struct map {
+    int a, b, c;
+} t;
+vector<map> info;
+bool cmp(map i, map j) {
+    return i.c < j.c;
+}
+int N, M, ans, V[1010], cnt;
+char c[1010];
 int find(int x) {
     if(x == V[x]) return V[x];
     return V[x] = find(V[x]);
@@ -15,38 +24,29 @@ int main() {
     }
 
     for(int i = 1; i <= M; i++) {
-        int u, v, d;
-        cin >> u >> v >> d;
-        if(c[u] != c[v]) {
-            int a, b;
-            a = find(u);
-            b = find(v);
-            if(a != b) {
-                V[b] = a;
-                dis[u][v] = dis[v][u] = d;
-            }
-            else if(dis[u][v] != 0 && d < dis[u][v]) {
-                dis[u][v] = dis[v][u] = d;
-            }
-        }
+        cin >> t.a >> t.b >> t.c;
+        info.push_back(t);
     }
 
-    for(int i = 2; i <= N; i++) {
-        if(find(V[i-1]) != find(V[i])) {
-            cout << -1;
-            return 0;
+    sort(info.begin(), info.end(), cmp);
+
+    for(int i = 1; i <= M; i++) {
+        int u, v, d, a, b;
+        u = info[i-1].a;
+        v = info[i-1].b;
+        d = info[i-1].c;
+        if(c[u] == c[v]) continue;
+        a = find(u);
+        b = find(v);
+        if(a != b) {
+            V[b] = a;
+            ans += d;
+            cnt++;
         }
     }
-
-    for(int i = 1; i <= N; i++) {
-        for(int j = i+1; j <= N; j++) {
-            if(dis[i][j] != 0) {
-                ans += dis[i][j];
-            }
-        }
-    }
-
-    cout << ans;
+    
+    if(cnt == N-1) cout << ans;
+    else cout << -1;
 
     return 0;
 }
