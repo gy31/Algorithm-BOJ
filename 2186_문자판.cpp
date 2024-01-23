@@ -1,47 +1,45 @@
-#include<stdio.h>
-#include<string.h>
-char board[100][100], dp[80][100][100], alp[81];
-int main()
-{
-    int i, j, K, cnt, answer = 0;
-    int n, m, k;
-    scanf("%d%d%d", &n, &m, &k);
-    
-    for(i = 0; i < n; i++) {
-        for(j = 0 ; j < m; j++) {
-            scanf("%c", &board[i][j]);
+#include<iostream>
+#include<cstring>
+#include<string>
+using namespace std;
+int N, M, K, dp[101][101][81], dx[4]={0,0,-1,1}, dy[4]={-1,1,0,0}, ans;
+char map[101][101];
+string word;
+int dfs(int x, int y, int n) {
+    if(dp[x][y][n] != -1) return dp[x][y][n];
+    if(n == word.length()) return 1;
+    dp[x][y][n] = 0;
+    for(int i = 0; i < 4; i++) {
+        for(int j = 1; j <= K; j++) {
+            int nx = x + dx[i] * j;
+            int ny = y + dy[i] * j;
+            if(nx < 1 || nx > N || ny < 1 || ny > M) continue;
+            if(word[n] != map[nx][ny]) continue;
+            dp[x][y][n] += dfs(nx, ny, n+1);
         }
     }
-    scanf("%s", alp);
+    return dp[x][y][n];
+}
+int main() {
+    cin >> N >> M >> K;
 
-    for(i = 0; i < n; i++) {
-        for(j = 0 ; j < m; j++) {
-            if(board[i][j] == alp[0]) dp[0][i][j]++;
+    for(int i = 1; i <= N; i++) {
+        for(int j = 1; j <= M; j++) {
+            cin >> map[i][j];
         }
     }
+    memset(dp, -1, sizeof(dp));
+    cin >> word;
 
-    for(cnt = 1; cnt <= strlen(alp); cnt++) {
-        for(i = 0; i < n; i++) {
-            for(j = 0 ; j < m; j++) {
-                if(board[i][j] >= 1) {
-                    for(K = -k; K <= k; K++) {
-                        // 범위 설정해야함
-                        if(i+K < 0 || i+K >= n || j+K < 0 || j+K >= m) continue;
-                        if(dp[cnt][i+K][j] == alp[cnt]) dp[cnt][i+K][j]++;
-                        if(dp[cnt][i][j+K] == alp[cnt]) dp[cnt][i][j+K]++;
-                    }
-                }
+    for(int i = 1; i <= N; i++) {
+        for(int j = 1; j <= M; j++) {
+            if(map[i][j] == word[0]) {
+                ans += dfs(i, j, 1);
             }
         }
     }
 
-    for(i = 0; i < n; i++) {
-        for(j = 0 ; j < m; j++) {
-            answer += dp[strlen(alp)][i][j];
-        }
-    }
-
-    printf("%d", answer);
+    cout << ans;
 
     return 0;
 }
