@@ -23,9 +23,11 @@ int main() {
         cin >> a >> b >> c;
         map[a].push_back({b, c});
         via[i] = i;
+        dp[i] = -1;
     }
 
     q.push(1);
+    dp[1] = 0;
 
     while(!q.empty()) {
         int t = q.front(); q.pop();
@@ -37,6 +39,10 @@ int main() {
                 dp[a] = dp[t] + b;
                 via[a] = t;
             }
+        }
+
+        for(int i = 0; i < map[t].size(); i++) {
+            int a = map[t][i].first;
             q.push(a);
         }
 
