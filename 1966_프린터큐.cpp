@@ -1,40 +1,33 @@
 #include<stdio.h>
-#include<algorithm>
+#include<queue>
 using namespace std;
-int printQ[10000], numQ[10000], arr[100];
-int chk(int i, int j) {
-    return i < j;
-}
-int main()
-{
-    int i, j, x, n, m, input = 0, out = 0, idx;
-    scanf("%d", &x);
+int T, N, M;
+int main() {
+    scanf("%d", &T);
 
-    for(i = 0; i < x; i++) {
-        scanf("%d%d", &n, &m);
-        for(j = 0; j < n; j++) {
-            scanf("%d", &arr[j]);
-            numQ[input] = arr[j]; // 숫자
-            printQ[input] = input; // 순서
-            input++;
+    while(T--) {
+        int cnt = 0;
+        queue<pair<int,int>> q;
+        priority_queue<int> pq;
+        scanf("%d%d", &N, &M);
+        for(int i = 0; i < N; i++) {
+            int a;
+            scanf("%d", &a);
+            q.push({a, i});
+            pq.push(a);
         }
-        sort(arr, arr + n, chk);
-
-        idx = 0;
-        while(1) {
-            if(numQ[out] == arr[idx]) {
-                if(printQ[out] == m) break;
-                out++; idx++;
+        while(!q.empty()) {
+            pair<int, int> t = q.front(); q.pop();
+            if(t.first == pq.top()) {
+                pq.pop(); cnt++;
+                if(t.second == M) {
+                    printf("%d\n", cnt);
+                    break;
+                }
             }
-            else {
-                numQ[input] = numQ[out];
-                printQ[input] = printQ[out];
-                input++;
-            }
+            q.push(t);
         }
-        printf("%d\n", idx);
     }
-    
 
     return 0;
 }
