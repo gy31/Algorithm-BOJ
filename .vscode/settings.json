@@ -14,6 +14,9 @@
     "ios": "cpp",
     "map": "cpp",
     "string_view": "cpp",
-    "unordered_map": "cpp"
+    "unordered_map": "cpp",
+    "chrono": "cpp",
+    "limits": "cpp",
+    "algorithm": "cpp"
   }
 }
