@@ -1,1 +1,2 @@
-arr
+
+    while(!ST.empty()) {
